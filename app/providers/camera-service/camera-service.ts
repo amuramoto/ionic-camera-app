@@ -11,8 +11,7 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class CameraService {
 
-  imageBase64: string;
-
+  imageBase64: Blob;
   constructor() {  
   }
 
