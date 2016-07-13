@@ -1,6 +1,7 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {CameraService} from '../../providers/camera-service/camera-service';
+import {FilterService} from '../../providers/filter-service/filter-service';
 import {File} from 'ionic-native';
 /*
   Generated class for the DetailedViewPage page.
@@ -9,15 +10,16 @@ import {File} from 'ionic-native';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/detailed-view/detailed-view.html'
+  templateUrl: 'build/pages/detailed-view/detailed-view.html',
+  providers: [FilterService]
 })
 export class DetailedViewPage {
 
 	@ViewChild("photo") photo: ElementRef;
-	
-
+	photoCtx: CanvasRenderingContext2D;
+	photoCanvas: any;
 src:any;
-  constructor(private _nav: NavController, private _params: NavParams, private _cameraService: CameraService) {
+  constructor(private _nav: NavController, private _params: NavParams, private _cameraService: CameraService, private _filterService: FilterService) {
 
   }
 
@@ -28,23 +30,39 @@ src:any;
   }
 
   private displayPhoto () {
-  	let ctx: CanvasRenderingContext2D = this.photo.nativeElement.getContext("2d");    		
+  	this.photoCanvas = this.photo.nativeElement;
+  	this.photoCtx = this.photoCanvas.getContext("2d");    		
   	const image = new Image();
 
-  	image.onload = function () {
-  	
+  	image.onload = () => {
+ 
   		let canvasWidth = window.innerWidth;
   		let canvasHeight = (canvasWidth / image.width) * image.height; //match canvas aspect ratio to original image
   	
-  		ctx.canvas.width = canvasWidth;
-  		ctx.canvas.height = canvasHeight;
+  		this.photoCtx.canvas.width = canvasWidth;
+  		this.photoCtx.canvas.height = canvasHeight;
   		
-  		ctx.drawImage(image, 0, 0, image.width, image.height,
+  		this.photoCtx.drawImage(image, 0, 0, image.width, image.height,
   												 0, 0, canvasWidth, canvasHeight);
   	
   	}
 
   	image.src=this._params.get('data');
   }
+
+ 
+  private filterImage (filter, ...var_args) {
+	 	let imageData = this.photoCtx.getImageData(0, 0, this.photoCanvas.width, this.photoCanvas.height);
+	  let args = [imageData];
+	  
+	  for (let i = 2; i < arguments.length; i++) {
+	    args.push(arguments[i]);
+	  }
+	  console.log(this._filterService[filter]);
+	  let imageDataFiltered = this._filterService[filter].apply(null, args);
+	  this.photoCtx.putImageData(imageDataFiltered, 0, 0);
+	}
+
+	
 
 }
