@@ -47,7 +47,7 @@ src:any;
   	
   	}
 
-  	image.src=this._params.get('data');
+  	image.src=this._params.get('file_uri');
   }
 
  
@@ -58,7 +58,6 @@ src:any;
 	  for (let i = 2; i < arguments.length; i++) {
 	    args.push(arguments[i]);
 	  }
-	  console.log(this._filterService[filter]);
 	  let imageDataFiltered = this._filterService[filter].apply(null, args);
 	  this.photoCtx.putImageData(imageDataFiltered, 0, 0);
 	}

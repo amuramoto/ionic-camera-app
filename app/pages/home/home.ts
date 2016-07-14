@@ -15,21 +15,35 @@ test:string;
 
   }
 
-  takePicture(){    
+  private takePicture(){    
     Camera.getPicture({
     	quality: 20,      
 		  targetWidth: 1000,
 		  targetHeight: 1000,
-      destinationType: Camera.DestinationType.DATA_URL,
+      destinationType: Camera.DestinationType.FILE_URI,
       sourceType: Camera.PictureSourceType.CAMERA,      
       encodingType: Camera.EncodingType.JPEG,      
       correctOrientation: true
-      })
-    	.then((file) => {    	
-	      this._nav.push(DetailedViewPage, {data: "data:image/jpeg;base64," + file});
-	    }, (err) => {
-	      console.log(err);
-	    });
+    })
+  	.then((file_uri) => {    	
+      this._nav.push(DetailedViewPage, {file_uri: file_uri});
+    }, (err) => {
+      console.log(err);
+    });
+  }
+
+  private showGallery() {
+  	Camera.getPicture({
+    	destinationType: Camera.DestinationType.FILE_URI,
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,      
+      encodingType: Camera.EncodingType.JPEG,      
+      correctOrientation: true
+    })
+  	.then((file_uri) => {    	
+  		this._nav.push(DetailedViewPage, {file_uri: file_uri});      
+    }, (err) => {
+      console.log(err);
+    });
   }
 
 }
