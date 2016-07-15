@@ -30,13 +30,7 @@ export class FilterService {
                 0.11, 0.11, 0.11, 0]      
     }
 
-  constructor(private _filterService: FilterService) {    
-    this.originalCanvas = _filterService.getCanvasClone();
-    this.originalCtx = this.originalCanvas.getContext("2d")
-    this.originalCanvasWidth = this.originalCtx.canvas.width;
-    this.originalCanvasHeight = this.originalCtx.canvas.height;
-    // this.imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
-
+  constructor() {    
     
   };
 
@@ -66,6 +60,10 @@ export class FilterService {
 
   public setImage(image) {
     this.image = image;
+  }
+
+  public getImage() {
+    return this.image;
   }
 
   public setOriginalCanvas(canvas: any) {

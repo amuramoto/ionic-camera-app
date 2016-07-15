@@ -22,7 +22,7 @@ export class FilterComponent {
 	private originalCanvasWidth: number;
 	private originalCanvasHeight: number;
 	private imageData: ImageData;
-
+	private image: any;
 	private newCanvas: any;
 	private newCtx: CanvasRenderingContext2D;
 
@@ -35,11 +35,13 @@ export class FilterComponent {
 								0.11, 0.11, 0.11, 0]			
 		}
   constructor(private _filterService: FilterService) {    
+    this.image = _filterService.getImage();
+
     this.originalCanvas = _filterService.getCanvasClone();
     this.originalCtx = this.originalCanvas.getContext("2d")
     this.originalCanvasWidth = this.originalCtx.canvas.width;
     this.originalCanvasHeight = this.originalCtx.canvas.height;
-    // this.imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
+    this.imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
 
     this.newCanvas = this.filterCanvas.nativeElement;    
     this.newCtx = this.newCanvas.getContext("2d");
@@ -47,27 +49,9 @@ export class FilterComponent {
   };
 
 
-  private applyFilter (filterName) {
-  	let filterMatrix: Array<number> = this.filterMatrices[filterName];
- 		let imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
- 		let d = imageData.data;
-
- 		for (var i = 0; i < d.length; i += 8) {
-    
- 			let red = d[i];
- 			let green = d[i + 1];
- 			let blue = d [i +2];
- 			let alpha = d [i + 3]; 
-
-      d[i] = red*filterMatrix[0] + red*filterMatrix[1] + red*filterMatrix[2] + red*filterMatrix[3];
-  
-      d[i+1] = green*filterMatrix[4] + green*filterMatrix[5] + green*filterMatrix[6] + green*filterMatrix[7];
-  
-      d[i+2] = blue*filterMatrix[8] + blue*filterMatrix[9] + blue*filterMatrix[10] + blue*filterMatrix[11];
-      
-    } 	
-
-    
+  ngAfterViewInit() {
+  	console.log('ok')
+  	this.newCtx.putImageData(this.imageData, 0, 0);
   }
 
 }
