@@ -16,9 +16,9 @@
 <ion-content>
 	<div class="canvas-container">
 		<canvas #photo class=''></canvas>
-		<button (click)="filterImage('grayscale')">aaaaaaa</button>
+		
 	</div>
 	<ion-scroll scrollX="true">
-	
+		<filter *ngFor="let filter of filters" filterName="filter"></filter>
 	</ion-scroll>
 </ion-content>
