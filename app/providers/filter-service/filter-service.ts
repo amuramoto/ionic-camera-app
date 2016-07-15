@@ -13,6 +13,8 @@ export class FilterService {
   
   private originalCanvas: any;
   private originalCtx: CanvasRenderingContext2D;
+  private canvasCopy: any;
+  private ctxCopy: CanvasRenderingContext2D;
   private originalImageData: ImageData;
   private image;
   public  selectedFilter: Uint8ClampedArray;
@@ -42,8 +44,7 @@ export class FilterService {
   };
 
 
-  public applyFilter (filterName, imageData) {
-    console.log('ok')
+  public applyFilter (filterName, imageData) {    
     let filterMatrix: Array<number> = this.filterMatrices[filterName];
     // let imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
     let d = imageData.data;
@@ -67,8 +68,11 @@ export class FilterService {
   }
 
   public selectFilter(filterName: string) {
-     this.applyFilter(filterName, this.originalImageData)   
-     this.originalCtx.putImageData(this.originalImageData, 0, 0);
+     let imageData = this.ctxCopy.getImageData(0, 0 , this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);
+     let filteredData = this.applyFilter(filterName, imageData);
+
+     this.originalCtx.putImageData(filteredData, 0, 0);
+
   }
 
   public setImage(file_uri:string) {
@@ -77,14 +81,22 @@ export class FilterService {
   }
 
   public getImage() {
-this.setImage('./test.png')
+    console.log(this.image);
     return this.image;
+
   }
 
-  public setOriginalCtx(ctx: CanvasRenderingContext2D) {
+  public setOriginalCanvas(canvas: any) {
+    this.originalCanvas = canvas;
+    this.originalCtx = this.originalCanvas.getContext("2d");     
+    this.copyCanvas(canvas);    
+  }
 
-    this.originalCtx = ctx;   
-    this.originalImageData = this.originalCtx.getImageData(0,0,this.originalCtx.canvas.width,this.originalCtx.canvas.height);
+  private copyCanvas(canvas: any) {
+    this.canvasCopy = canvas.cloneNode();
+    this.ctxCopy = this.canvasCopy.getContext("2d");
+    this.ctxCopy.drawImage(this.image, 0, 0, this.image.width - 40, this.image.height - 40,
+                           0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height)
   }
 
 

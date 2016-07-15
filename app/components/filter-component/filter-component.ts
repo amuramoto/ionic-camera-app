@@ -43,11 +43,11 @@ export class FilterComponent {
     this.ctx = this.canvas.getContext("2d");
     this.ctx.canvas.width = this.ctx.canvas.height = window.innerWidth*.3333;
   	this.image.onload = () => {
-		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-		this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
-		
-		let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
-		this.ctx.putImageData(filteredData,0,0)
+			this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+			this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
+			
+			let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
+			this.ctx.putImageData(filteredData,0,0)
 
   	}
   }

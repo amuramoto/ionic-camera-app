@@ -33,10 +33,12 @@ src:any;
   }
 ngOnInit () {
 	
-	this.image = this._filterService.getImage();
+	this.image = new Image();
+	this.image.src = this._navParams.get('file_uri');
   	
 }
   private displayPhoto () {
+  
   	this.canvas = this.photo.nativeElement;
   	this.ctx = this.canvas.getContext("2d");    		
   	
@@ -51,7 +53,7 @@ ngOnInit () {
   		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
   												 0, 0, canvasWidth, canvasHeight);
   	
-  		this._filterService.setOriginalCtx(this.ctx);
+  		this._filterService.setOriginalCanvas(this.canvas);
   		
   	}
 

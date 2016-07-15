@@ -26,8 +26,9 @@ test:string;
       correctOrientation: true
     })
   	.then((file_uri) => {    	
+
   		this._filterService.setImage(file_uri);
-      this._nav.push(DetailedViewPage);
+      this._nav.push(DetailedViewPage,{file_uri: file_uri});
     }, (err) => {
       console.log(err);
     });
