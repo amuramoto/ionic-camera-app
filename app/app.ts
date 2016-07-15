@@ -2,7 +2,7 @@ import {Component} from '@angular/core';
 import {Platform, ionicBootstrap} from 'ionic-angular';
 import {StatusBar} from 'ionic-native';
 import {HomePage} from './pages/home/home';
-import {CameraService} from './providers/camera-service/camera-service';
+import {FilterService} from './providers/filter-service/filter-service';
 
 
 import {DetailedViewPage} from './pages/detailed-view/detailed-view';
@@ -23,4 +23,4 @@ rootPage:any = DetailedViewPage;
   }
 }
 
-ionicBootstrap(MyApp, [CameraService]);
+ionicBootstrap(MyApp, [FilterService]);

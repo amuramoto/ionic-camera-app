@@ -2,7 +2,7 @@ import {Component, ElementRef, ViewChild} from '@angular/core';
 import {NavController} from 'ionic-angular';
 import {DetailedViewPage} from '../detailed-view/detailed-view'
 import {Camera, File} from 'ionic-native';
-import {CameraService} from '../../providers/camera-service/camera-service';
+import {FilterService} from '../../providers/filter-service/filter-service';
 
 @Component({
   templateUrl: 'build/pages/home/home.html'
@@ -11,7 +11,7 @@ export class HomePage {
 test:string;  
   public base64Image: string;
   @ViewChild("photo") photo: ElementRef;
-  constructor(private _nav: NavController, private _cameraService: CameraService) {
+  constructor(private _nav: NavController, private _filterService: FilterService) {
 
   }
 
@@ -26,7 +26,8 @@ test:string;
       correctOrientation: true
     })
   	.then((file_uri) => {    	
-      this._nav.push(DetailedViewPage, {file_uri: file_uri});
+  		this._filterService.setImage(file_uri);
+      this._nav.push(DetailedViewPage);
     }, (err) => {
       console.log(err);
     });
@@ -40,12 +41,13 @@ test:string;
       correctOrientation: true
     })
   	.then((file_uri) => {    	
-  		this._nav.push(DetailedViewPage, {file_uri: file_uri});      
+  		this._filterService.setImage(file_uri);
+  		this._nav.push(DetailedViewPage);      
     }, (err) => {
       console.log(err);
     });
   }
 
-  
+
 
 }

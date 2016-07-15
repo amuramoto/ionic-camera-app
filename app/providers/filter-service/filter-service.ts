@@ -22,12 +22,18 @@ export class FilterService {
   private newCtx: CanvasRenderingContext2D;
 
   private filterMatrices: Object = {
-    sepia:   [0.393, 0.349, 0.272, 0,
-             0.769, 0.686, 0.534, 0,
-             0.189, 0.168, 0.131, 0],
-    grayscale: [0.33, 0.33, 0.33, 0,
-                0.59,0.59, 0.59, 0,
-                0.11, 0.11, 0.11, 0]      
+    sepia:   [0.393, 0.769,  0.189, 0,
+              0.349, 0.686,  0.168, 0,
+              0.272, 0.534, 0.131, 0],
+
+    grayscale: [0.33, 0.34, 0.33, 0,
+                0.33, 0.34, 0.33, 0,
+                0.33, 0.34, 0.33, 0,
+                   0,    0,    0, 1],
+    red: [0.73, 0.34, 0.33, 0,
+          0.73, 0.34, 0.33, 0,
+          0.73, 0.34, 0.33, 0,
+             0,    0,    0, 1]                         
     }
 
   constructor() {    
@@ -35,39 +41,42 @@ export class FilterService {
   };
 
 
-  public applyFilter (filterName) {
+  public applyFilter (filterName, imageData) {
+    console.log('ok')
     let filterMatrix: Array<number> = this.filterMatrices[filterName];
-    let imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
+    // let imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
     let d = imageData.data;
 
-    for (var i = 0; i < d.length; i += 8) {
+    for (var i = 0; i < d.length; i += 4) {
 
       let red = d[i];
       let green = d[i + 1];
       let blue = d [i +2];
       let alpha = d [i + 3]; 
 
-      d[i] = red*filterMatrix[0] + red*filterMatrix[1] + red*filterMatrix[2] + red*filterMatrix[3];
+      d[i] = red*filterMatrix[0] + green*filterMatrix[1] + blue*filterMatrix[2] + alpha*filterMatrix[3];
 
-      d[i+1] = green*filterMatrix[4] + green*filterMatrix[5] + green*filterMatrix[6] + green*filterMatrix[7];
+      d[i+1] = red*filterMatrix[4] + green*filterMatrix[5] + blue*filterMatrix[6] + alpha*filterMatrix[7];
 
-      d[i+2] = blue*filterMatrix[8] + blue*filterMatrix[9] + blue*filterMatrix[10] + blue*filterMatrix[11];
+      d[i+2] = red*filterMatrix[8] + green*filterMatrix[9] + blue*filterMatrix[10] + alpha*filterMatrix[11];
 
     }   
 
     return imageData;    
   }
 
-  public setImage(image) {
-    this.image = image;
+  public setImage(file_uri) {
+    this.image = new Image();
+    this.image.src = file_uri;    
   }
 
   public getImage() {
+this.setImage('./test.png')
     return this.image;
   }
 
   public setOriginalCanvas(canvas: any) {
-    this.originalCanvas = canvas;
+    this.originalCanvas = canvas;   
   }
 
   public getCanvasClone() {
