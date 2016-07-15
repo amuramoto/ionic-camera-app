@@ -18,7 +18,7 @@ export class DetailedViewPage {
 	@ViewChild("photo") photo: ElementRef;
 	canvas: any;
 	ctx: CanvasRenderingContext2D;	
-	filters: Array<string> = ['grayscale', 'sepia', 'red'];
+	filters: Array<string> = ['grayscale', 'sepia', 'warm', 'red'];
 	image: any;
 
 src:any;
@@ -51,7 +51,7 @@ ngOnInit () {
   		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
   												 0, 0, canvasWidth, canvasHeight);
   	
-  		this._filterService.setOriginalCanvas(this.canvas)
+  		this._filterService.setOriginalCtx(this.ctx);
   		
   	}
 

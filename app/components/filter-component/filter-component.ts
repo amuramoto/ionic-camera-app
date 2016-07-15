@@ -8,8 +8,7 @@ import { FilterService } from '../../providers/filter-service/filter-service';
 */
 @Component({
   selector: 'filter',
-  templateUrl: 'build/components/filter-component/filter-component.html',
-  providers: [FilterService]
+  templateUrl: 'build/components/filter-component/filter-component.html'
 })
 export class FilterComponent {
 
@@ -17,14 +16,10 @@ export class FilterComponent {
 	
 	@Input () filterName: string;
 
-	private originalCanvas: any;
-	private originalCtx: CanvasRenderingContext2D;
-	private originalCanvasWidth: number;
-	private originalCanvasHeight: number;
 	private imageData: ImageData;
 	private image: any;
-	private newCanvas: any;
-	private newCtx: CanvasRenderingContext2D;
+	private canvas: any;
+	private ctx: CanvasRenderingContext2D;	
 
   constructor(private _filterService: FilterService) {    
 
@@ -44,16 +39,21 @@ export class FilterComponent {
 	}
 
   ngAfterViewInit() {
-  	this.newCanvas = this.filterCanvas.nativeElement;    
-    this.newCtx = this.newCanvas.getContext("2d");
-    this.newCtx.canvas.width = this.newCtx.canvas.height = window.innerWidth*.3333;
+  	this.canvas = this.filterCanvas.nativeElement;    
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.canvas.width = this.ctx.canvas.height = window.innerWidth*.3333;
   	this.image.onload = () => {
-		this.newCtx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.newCtx.canvas.width, this.newCtx.canvas.height);
-
-		let filteredData = this._filterService.applyFilter(this.filterName, this.newCtx.getImageData(0,0,this.newCtx.canvas.width,this.newCtx.canvas.height));
-		this.newCtx.putImageData(filteredData,0,0)
+		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+		this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
+		
+		let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
+		this.ctx.putImageData(filteredData,0,0)
 
   	}
   }
+
+	private selectFilter() {
+		this._filterService.selectFilter(this.filterName);
+	}  
 
 }

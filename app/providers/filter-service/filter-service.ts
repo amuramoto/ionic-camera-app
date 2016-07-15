@@ -13,27 +13,28 @@ export class FilterService {
   
   private originalCanvas: any;
   private originalCtx: CanvasRenderingContext2D;
-  private originalCanvasWidth: number;
-  private originalCanvasHeight: number;
-  private imageData: ImageData;
+  private originalImageData: ImageData;
   private image;
+  public  selectedFilter: Uint8ClampedArray;
 
   private newCanvas: any;
   private newCtx: CanvasRenderingContext2D;
 
   private filterMatrices: Object = {
-    sepia:   [0.393, 0.769,  0.189, 0,
-              0.349, 0.686,  0.168, 0,
-              0.272, 0.534, 0.131, 0],
+        sepia:   [0.393, 0.769,  0.189, 0,
+                0.349, 0.686,  0.168, 0,
+                0.272, 0.534, 0.131, 0],
 
     grayscale: [0.33, 0.34, 0.33, 0,
                 0.33, 0.34, 0.33, 0,
+                0.33, 0.34, 0.33, 0],
+         warm: [1.4, 0, .3, 0,
+                0, 1.4, 0, 0,
+                0, 0, 1.4, 0,
+                0,    0,    0, 1],
+          red: [0.48, 0.54, 0.63, 0,
                 0.33, 0.34, 0.33, 0,
-                   0,    0,    0, 1],
-    red: [0.73, 0.34, 0.33, 0,
-          0.73, 0.34, 0.33, 0,
-          0.73, 0.34, 0.33, 0,
-             0,    0,    0, 1]                         
+                0.33, 0.14, 0.33, 0]                         
     }
 
   constructor() {    
@@ -65,7 +66,12 @@ export class FilterService {
     return imageData;    
   }
 
-  public setImage(file_uri) {
+  public selectFilter(filterName: string) {
+     this.applyFilter(filterName, this.originalImageData)   
+     this.originalCtx.putImageData(this.originalImageData, 0, 0);
+  }
+
+  public setImage(file_uri:string) {
     this.image = new Image();
     this.image.src = file_uri;    
   }
@@ -75,13 +81,12 @@ this.setImage('./test.png')
     return this.image;
   }
 
-  public setOriginalCanvas(canvas: any) {
-    this.originalCanvas = canvas;   
+  public setOriginalCtx(ctx: CanvasRenderingContext2D) {
+
+    this.originalCtx = ctx;   
+    this.originalImageData = this.originalCtx.getImageData(0,0,this.originalCtx.canvas.width,this.originalCtx.canvas.height);
   }
 
-  public getCanvasClone() {
-    return this.originalCanvas.cloneNode();
-  }
 
 
 
