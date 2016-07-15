@@ -2,6 +2,7 @@ import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, NavParams } from 'ionic-angular';
 import {CameraService} from '../../providers/camera-service/camera-service';
 import {FilterService} from '../../providers/filter-service/filter-service';
+import {FilterComponent} from '../../components/filter-component/filter-component'
 import {File} from 'ionic-native';
 /*
   Generated class for the DetailedViewPage page.
@@ -11,15 +12,16 @@ import {File} from 'ionic-native';
 */
 @Component({
   templateUrl: 'build/pages/detailed-view/detailed-view.html',
-  providers: [FilterService]
+  providers: [FilterService, FilterComponent]
 })
 export class DetailedViewPage {
 
 	@ViewChild("photo") photo: ElementRef;
 	photoCtx: CanvasRenderingContext2D;
 	photoCanvas: any;
+
 src:any;
-  constructor(private _nav: NavController, private _params: NavParams, private _cameraService: CameraService, private _filterService: FilterService) {
+  constructor(private _nav: NavController, private _navParams: NavParams, private _cameraService: CameraService, private _filterService: FilterService) {
 
   }
 
@@ -47,7 +49,8 @@ src:any;
   	
   	}
 
-  	image.src=this._params.get('file_uri');
+  	// image.src=this._navParams.get('file_uri');
+  	image.src="./test.png"
   }
 
  

@@ -11,9 +11,19 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FilterService {
   
+  private originalCanvas: any;
 
   constructor(private http: Http) {
   
+  }
+
+
+  public setOriginalCanvas(canvas: any) {
+    this.originalCanvas = canvas;
+  }
+
+  public getCanvasClone() {
+    return this.originalCanvas.cloneNode();
   }
 
   private grayscale = function(pixels, args) {
