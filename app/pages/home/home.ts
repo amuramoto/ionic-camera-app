@@ -17,9 +17,9 @@ ngOnInit () { console.log('NGONINIT UP IN HERE'); }
 
   private takePicture(){    
     Camera.getPicture({
-    	quality: 20,      
-		  targetWidth: 1000,
-		  targetHeight: 1000,
+    	quality: 100,      
+		  targetWidth: 1500,
+		  targetHeight: 1500,
       destinationType: Camera.DestinationType.FILE_URI,
       sourceType: Camera.PictureSourceType.CAMERA,      
       encodingType: Camera.EncodingType.JPEG,      

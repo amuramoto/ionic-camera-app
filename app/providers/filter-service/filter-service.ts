@@ -17,12 +17,9 @@ export class FilterService {
   private ctxCopy: CanvasRenderingContext2D;
   private originalImageData: ImageData;
   private image;
-  private filterNames: Array<string<;
+  private filterNames: Array<string>;
   public  selectedFilter: Uint8ClampedArray;
-
-  private newCanvas: any;
-  private newCtx: CanvasRenderingContext2D;
-
+  private filteredData = {};
   private filterMatrices: Object = {
         sepia:   [0.393, 0.769,  0.189, 0,
                 0.349, 0.686,  0.168, 0,
@@ -37,17 +34,26 @@ export class FilterService {
                 0,    0,    0, 1],
           red: [0.48, 0.54, 0.63, 0,
                 0.33, 0.34, 0.33, 0,
-                0.33, 0.14, 0.33, 0]                         
+                0.33, 0.14, 0.33, 0],
+          blue: [0.48, 0.54, 0.63, 0,
+          0.33, 0.34, 0.53, 0,
+          0.33, 0.14, 0.33, 0],
+          green: [0.48, 0.54, 0.63, 0,
+          0.33, 0.34, 0.33, 0,
+          0.33, 0.14, 0.63, 0],
+          other: [0.48, 0.44, 0.63, 0,
+          0.93, 0.24, 0.33, 0,
+          0.33, 0.14, 0.33, 0]
+
     }
 
   constructor() {    
-    this.filterNames = Object.keys(this.filterMatrices)
+    this.filterNames = Object.keys(this.filterMatrices);    
   };
 
 
   public applyFilter (filterName, imageData) {    
-    let filterMatrix: Array<number> = this.filterMatrices[filterName];
-    // let imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
+    let filterMatrix: Array<number> = this.filterMatrices[filterName];    
     let d = imageData.data;
 
     for (var i = 0; i < d.length; i += 4) {
@@ -69,11 +75,7 @@ export class FilterService {
   }
 
   public selectFilter(filterName: string) {
-     let imageData = this.ctxCopy.getImageData(0, 0 , this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);
-     let filteredData = this.applyFilter(filterName, imageData);
-
-     this.originalCtx.putImageData(filteredData, 0, 0);
-
+     this.originalCtx.putImageData(this.filteredData[filterName], 0, 0);
   }
 
   public setImage(image) {
@@ -104,25 +106,24 @@ export class FilterService {
   }
 
   private generateFilters () {
-    
-
-
-    this.canvas = this.filterCanvas.nativeElement;    
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.canvas.width = this.ctx.canvas.height = window.innerWidth*.3333;
-    
-    this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-    this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
-    
-    let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
-    this.ctx.putImageData(filteredData,0,0)
+    for (let filterName of this.filterNames) {    
+      let imageDataCopy = this.ctxCopy.getImageData(0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);      
+      let filteredData = this.applyFilter(filterName, imageDataCopy);      
+      this.filteredData[filterName] = filteredData;
+    }
   }
 
+  public getFilteredImageData (filterName: string) {
+    return this.filteredData[filterName];
+  }
 
+  public getFilterNames () {
+    return this.filterNames;
+  }
 
-
-
-
+  public displayFilteredImage (filterName: string) {
+    this.originalCtx.putImageData(this.filteredData[filterName], 0, 0);
+  }
 
 
 

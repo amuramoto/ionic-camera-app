@@ -12,7 +12,7 @@ import { FilterService } from '../../providers/filter-service/filter-service';
 })
 export class FilterComponent {
 
-	@ViewChild("canvas") filterCanvas: ElementRef;
+	@ViewChild("canvas") canvasElement: ElementRef;
 	
 	@Input () filterName: string;
 
@@ -35,24 +35,21 @@ export class FilterComponent {
   };
 
 	ngOnInit(){
-		this.image = this._filterService.getImage();
+    let canvas = this.canvasElement.nativeElement;		
+    
+    let imageData = this._filterService.getFilteredImageData(this.filterName);
+    
+    // canvas.width = window.innerWidth;
+    // canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
+
+    let ctx = canvas.getContext("2d");
+    ctx.canvas.width = ctx.canvas.height = window.innerWidth*.3333;
+    ctx.putImageData(imageData, 0, 0);
 	}
 
-  ngAfterViewInit() {
-  	this.canvas = this.filterCanvas.nativeElement;    
-    this.ctx = this.canvas.getContext("2d");
-    this.ctx.canvas.width = this.ctx.canvas.height = window.innerWidth*.3333;
-  	
-		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
-		this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
-		
-		let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
-		this.ctx.putImageData(filteredData,0,0)
-  	
-  }
 
 	private selectFilter() {
-		this._filterService.selectFilter(this.filterName);
+		this._filterService.displayFilteredImage(this.filterName);
 	}  
 
 }

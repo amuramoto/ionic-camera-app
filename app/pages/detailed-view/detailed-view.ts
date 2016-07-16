@@ -16,21 +16,18 @@ import {File} from 'ionic-native';
 export class DetailedViewPage {
 
 	@ViewChild("photo") photo: ElementRef;
-	canvas: any;
+	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;	
-	filters: Array<string> = ['grayscale', 'sepia', 'warm', 'red'];
-	image: any;
-
-src:any;
+	image: HTMLImageElement;
+  filterNames: Array<string>;
   constructor(private _nav: NavController, private _navParams: NavParams, private _filterService: FilterService) {
-  	
+  	this.filterNames = this._filterService.getFilterNames();
   }
 
   ngOnInit () {	
     this.drawImage();    
 	}
 
-  // private drawImage (canvas, ctx) {
   private drawImage () {
   	this.image = this._filterService.getImage();      
     let canvas = this.photo.nativeElement;
@@ -39,24 +36,9 @@ src:any;
     canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
     
     let ctx = canvas.getContext("2d");	
-  		
+  	this._filterService.setOriginalCanvas(canvas);	
     this._filterService.drawImage(ctx);
-      
-  	this._filterService.setOriginalCanvas(canvas);
-  }
-
- 
- //  private filterImage (filter, ...var_args) {
-	//  	let imageData = this.photoCtx.getImageData(0, 0, this.photoCanvas.width, this.photoCanvas.height);
-	//   let args = [imageData];
-	  
-	//   for (let i = 2; i < arguments.length; i++) {
-	//     args.push(arguments[i]);
-	//   }
-	//   let imageDataFiltered = this._filterService[filter].apply(null, args);
-	//   this.photoCtx.putImageData(imageDataFiltered, 0, 0);
-	// }
-
-	
+    
+  }	
 
 }
