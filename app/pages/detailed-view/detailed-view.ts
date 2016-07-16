@@ -27,31 +27,22 @@ src:any;
   }
 
   ngOnInit () {	
-		this.image = this._filterService.getImage();  		
+    this.drawImage();    
 	}
 
-  ngAfterViewInit() { // wait for the view to init before using the element
-  	let canvas = this.photo.nativeElement;
-  	
-  	canvas.width = window.innerWidth;
-  	canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
-  	
-  	let ctx = canvas.getContext("2d");    		
-  	
-  	this.drawImage(canvas, ctx);		
-  }
-
-  private drawImage (canvas, ctx) {
-  
+  // private drawImage (canvas, ctx) {
+  private drawImage () {
+  	this.image = this._filterService.getImage();      
+    let canvas = this.photo.nativeElement;
+    
+    canvas.width = window.innerWidth;
+    canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
+    
+    let ctx = canvas.getContext("2d");	
   		
-  		ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
-  												 0, 0, ctx.canvas.width, ctx.canvas.height);
-  	
-  		this._filterService.setOriginalCanvas(canvas);
-  	
-  	
-
-
+    this._filterService.drawImage(ctx);
+      
+  	this._filterService.setOriginalCanvas(canvas);
   }
 
  

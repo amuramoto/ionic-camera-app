@@ -17,6 +17,7 @@ export class FilterService {
   private ctxCopy: CanvasRenderingContext2D;
   private originalImageData: ImageData;
   private image;
+  private filterNames: Array<string<;
   public  selectedFilter: Uint8ClampedArray;
 
   private newCanvas: any;
@@ -40,7 +41,7 @@ export class FilterService {
     }
 
   constructor() {    
-    
+    this.filterNames = Object.keys(this.filterMatrices)
   };
 
 
@@ -87,17 +88,35 @@ export class FilterService {
   public setOriginalCanvas(canvas: any) {
     this.originalCanvas = canvas;
     this.originalCtx = this.originalCanvas.getContext("2d");     
-    this.copyCanvas(canvas);    
+    this.copyCanvas(canvas);
+    this.generateFilters();
   }
 
   private copyCanvas(canvas: any) {
     this.canvasCopy = canvas.cloneNode();
     this.ctxCopy = this.canvasCopy.getContext("2d");
-    this.ctxCopy.drawImage(this.image, 0, 0, this.image.width - 40, this.image.height - 40,
-                           0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height)
+    this.drawImage(this.ctxCopy);
   }
 
+  public drawImage (ctx) {
+    ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
+                           0, 0, ctx.canvas.width, ctx.canvas.height);
+  }
 
+  private generateFilters () {
+    
+
+
+    this.canvas = this.filterCanvas.nativeElement;    
+    this.ctx = this.canvas.getContext("2d");
+    this.ctx.canvas.width = this.ctx.canvas.height = window.innerWidth*.3333;
+    
+    this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height, 0, 0, this.ctx.canvas.width, this.ctx.canvas.height);
+    this.imageData = this.ctx.getImageData(0,0,this.ctx.canvas.width,this.ctx.canvas.height);
+    
+    let filteredData: any = this._filterService.applyFilter(this.filterName, this.imageData);
+    this.ctx.putImageData(filteredData,0,0)
+  }
 
 
 
