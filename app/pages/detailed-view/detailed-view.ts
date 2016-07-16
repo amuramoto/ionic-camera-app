@@ -26,37 +26,29 @@ src:any;
   	
   }
 
-  ngAfterViewInit() { // wait for the view to init before using the element
-  
-  	this.displayPhoto();
-		
-  }
-ngOnInit () {
-	
-	this.image = new Image();
-	this.image.src = this._navParams.get('file_uri');
-  	
-}
-  private displayPhoto () {
-  
-  	this.canvas = this.photo.nativeElement;
-  	this.ctx = this.canvas.getContext("2d");    		
-  	
-  	this.image.onload = () => {
- 
-  		let canvasWidth = window.innerWidth;
-  		let canvasHeight = (canvasWidth / this.image.width) * this.image.height; //match canvas aspect ratio to original image
-  	
-  		this.ctx.canvas.width = canvasWidth;
-  		this.ctx.canvas.height = canvasHeight;
-  		
-  		this.ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
-  												 0, 0, canvasWidth, canvasHeight);
-  	
-  		this._filterService.setOriginalCanvas(this.canvas);
-  		
-  	}
+  ngOnInit () {	
+		this.image = this._filterService.getImage();  		
+	}
 
+  ngAfterViewInit() { // wait for the view to init before using the element
+  	let canvas = this.photo.nativeElement;
+  	
+  	canvas.width = window.innerWidth;
+  	canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
+  	
+  	let ctx = canvas.getContext("2d");    		
+  	
+  	this.drawImage(canvas, ctx);		
+  }
+
+  private drawImage (canvas, ctx) {
+  
+  		
+  		ctx.drawImage(this.image, 0, 0, this.image.width, this.image.height,
+  												 0, 0, ctx.canvas.width, ctx.canvas.height);
+  	
+  		this._filterService.setOriginalCanvas(canvas);
+  	
   	
 
 

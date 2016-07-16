@@ -8,12 +8,12 @@ import {FilterService} from '../../providers/filter-service/filter-service';
   templateUrl: 'build/pages/home/home.html'
 })
 export class HomePage {
-test:string;  
-  public base64Image: string;
-  @ViewChild("photo") photo: ElementRef;
+
   constructor(private _nav: NavController, private _filterService: FilterService) {
 
   }
+
+ngOnInit () { console.log('NGONINIT UP IN HERE'); }
 
   private takePicture(){    
     Camera.getPicture({
@@ -25,13 +25,7 @@ test:string;
       encodingType: Camera.EncodingType.JPEG,      
       correctOrientation: true
     })
-  	.then((file_uri) => {    	
-
-  		this._filterService.setImage(file_uri);
-      this._nav.push(DetailedViewPage,{file_uri: file_uri});
-    }, (err) => {
-      console.log(err);
-    });
+  	.then(file_uri => this.cameraSuccess(file_uri), err => console.log(err));
   }
 
   private showGallery() {
@@ -41,14 +35,16 @@ test:string;
       encodingType: Camera.EncodingType.JPEG,      
       correctOrientation: true
     })
-  	.then((file_uri) => {    	
-  		this._filterService.setImage(file_uri);
-  		this._nav.push(DetailedViewPage);      
-    }, (err) => {
-      console.log(err);
-    });
+  	.then(file_uri => this.cameraSuccess(file_uri), err => console.log(err));
   }
 
-
+  private cameraSuccess (file_uri) {
+  	let image = new Image();
+			image.onload = ()=>{
+				this._filterService.setImage(image);
+	      this._nav.push(DetailedViewPage);
+	    }
+	    image.src=file_uri;
+  }
 
 }

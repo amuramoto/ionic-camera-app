@@ -75,13 +75,11 @@ export class FilterService {
 
   }
 
-  public setImage(file_uri:string) {
-    this.image = new Image();
-    this.image.src = file_uri;    
+  public setImage(image) {
+    this.image = image;    
   }
 
   public getImage() {
-    console.log(this.image);
     return this.image;
 
   }
