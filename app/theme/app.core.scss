@@ -13,3 +13,19 @@
 ion-content {
 	background-color: color($colors, ionic, base);
 }
+
+ion-navbar {
+	border-bottom: color($colors, ionic, contrast) 1px solid;
+}
+
+ion-title {
+	font-weight: 500;
+}
+
+.center-vertical {
+    top: 50%;
+    transform: translateY(-50%);
+    position: absolute !important;
+    margin:0 auto;
+    width:100%;
+}

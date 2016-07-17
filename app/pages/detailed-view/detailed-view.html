@@ -6,7 +6,7 @@
 -->
 <ion-header>
 
-  <ion-navbar>
+  <ion-navbar ionic>
     <ion-title>Photo</ion-title>
   </ion-navbar>
 
@@ -19,7 +19,7 @@
 	</div>
 
 <ion-footer>
-	<ion-scroll scrollX="true">	
+	<ion-scroll scrollX="true" scrollbar-y="false">	
 		<filter *ngFor="let filterName of filterNames" filterName="{{filterName}}"></filter>				
 	</ion-scroll>
 </ion-footer>

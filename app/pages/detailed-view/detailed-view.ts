@@ -1,5 +1,5 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
-import { NavController, NavParams } from 'ionic-angular';
+import { NavController, ViewController } from 'ionic-angular';
 import {FilterService} from '../../providers/filter-service/filter-service';
 import {FilterComponent} from '../../components/filter-component/filter-component';
 import {File} from 'ionic-native';
@@ -20,11 +20,12 @@ export class DetailedViewPage {
 	ctx: CanvasRenderingContext2D;	
 	image: HTMLImageElement;
   filterNames: Array<string>;
-  constructor(private _nav: NavController, private _navParams: NavParams, private _filterService: FilterService) {
+  constructor(private _nav: NavController, private _filterService: FilterService, private _viewCtrl: ViewController) {
   	this.filterNames = this._filterService.getFilterNames();
   }
 
-  ngOnInit () {	
+  ionViewLoaded () {	
+    this._viewCtrl.setBackButtonText('Cancel');
     this.drawImage();    
 	}
 

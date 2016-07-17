@@ -13,17 +13,16 @@ export class HomePage {
 
   }
 
-ngOnInit () { console.log('NGONINIT UP IN HERE'); }
+  ionViewLoaded(){console.log('LOADED')}
+  ngOnInit(){console.log('NGONINIT')}
 
   private takePicture(){    
     Camera.getPicture({
-    	quality: 100,      
+    	quality: 10,      
 		  targetWidth: 1000,
 		  targetHeight: 1000,
       destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: Camera.PictureSourceType.CAMERA,      
-      encodingType: Camera.EncodingType.JPEG,      
-      correctOrientation: true
+      sourceType: Camera.PictureSourceType.CAMERA,            
     })
   	.then(file_uri => this.cameraSuccess(file_uri), err => console.log(err));
   }
@@ -31,7 +30,7 @@ ngOnInit () { console.log('NGONINIT UP IN HERE'); }
   private showGallery() {
   	Camera.getPicture({
     	destinationType: Camera.DestinationType.FILE_URI,
-      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,      
+      sourceType: Camera.PictureSourceType.PHOTOLIBRARY,
       encodingType: Camera.EncodingType.JPEG,      
       correctOrientation: true
     })
@@ -39,12 +38,13 @@ ngOnInit () { console.log('NGONINIT UP IN HERE'); }
   }
 
   private cameraSuccess (file_uri) {
+    console.log(file_uri)
   	let image = new Image();
-			image.onload = ()=>{
-				this._filterService.setImage(image);
-	      this._nav.push(DetailedViewPage);
-	    }
-	    image.src=file_uri;
+		image.onload = ()=>{
+			this._filterService.setImage(image);
+      this._nav.push(DetailedViewPage);
+    }
+    image.src=file_uri;
   }
 
 }
