@@ -32,8 +32,8 @@ export class DetailedViewPage {
   	this.image = this._filterService.getImage();      
     let canvas = this.photo.nativeElement;
     
-    canvas.width = window.innerWidth;
-    canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
+    canvas.width = canvas.height = window.innerWidth;
+    // canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
     
     let ctx = canvas.getContext("2d");	
   	this._filterService.setOriginalCanvas(canvas);	

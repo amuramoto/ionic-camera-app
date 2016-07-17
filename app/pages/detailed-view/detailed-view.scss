@@ -11,3 +11,15 @@ ion-scroll {
   white-space: nowrap;
   height: 150px;
 }
+
+#overflowingContent{
+  width: -webkit-max-content;
+  width: max-content;
+}
+
+.item{
+  float:left;
+  width: 125px;
+  padding: 0px;
+  margin-left: 5px;
+}

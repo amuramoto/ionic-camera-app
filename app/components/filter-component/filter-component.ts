@@ -21,30 +21,19 @@ export class FilterComponent {
 	private canvas: any;
 	private ctx: CanvasRenderingContext2D;	
 
-  constructor(private _filterService: FilterService) {    
-
-    
-
-    // this.originalCanvas = _filterService.getCanvasClone();
-    // this.originalCtx = this.originalCanvas.getContext("2d")
-    // this.originalCanvasWidth = this.originalCtx.canvas.width;
-    // this.originalCanvasHeight = this.originalCtx.canvas.height;
-    // this.imageData = this.originalCtx.getImageData(0, 0, this.originalCanvasWidth, this.originalCanvasHeight);
-
-    
-  };
+  constructor(private _filterService: FilterService) {};
 
 	ngOnInit(){
     let canvas = this.canvasElement.nativeElement;		
     
-    let imageData = this._filterService.getFilteredImageData(this.filterName);
+    canvas.width = canvas.height = 125;
     
-    // canvas.width = window.innerWidth;
-    // canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
-
-    let ctx = canvas.getContext("2d");
-    ctx.canvas.width = ctx.canvas.height = window.innerWidth*.3333;
-    ctx.putImageData(imageData, 0, 0);
+    let ctx = canvas.getContext("2d"); 
+    
+    this._filterService.drawImage(ctx);
+    let imageData = ctx.getImageData(0, 0, canvas.width, canvas.height);
+    let filteredData = this._filterService.applyFilter(this.filterName, imageData);
+    ctx.putImageData(filteredData, 0, 0);
 	}
 
 
