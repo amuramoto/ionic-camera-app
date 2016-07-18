@@ -18,4 +18,4 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [FilterService], { backButtonIcon: '', swipeBackEnabled:false });
+ionicBootstrap(MyApp, [FilterService], { backButtonIcon: false, swipeBackEnabled:false });

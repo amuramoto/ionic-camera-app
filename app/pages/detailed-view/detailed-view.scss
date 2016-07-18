@@ -9,23 +9,27 @@
 	}
 }
 
+.nextBtn {
+	color: color($colors, ionic, contrast);
+}
+
 #filterCanvas {	
 	border: #CCCCCC 1px solid;	
 }
 
 ion-scroll {
   white-space: nowrap;
-  height: 150px;
-}
+  height: 180px;
 
-#overflowingContent{
-  width: -webkit-max-content;
-  width: max-content;
-}
+  filter {
+		display: inline-block;
+		margin: 0px 5px;
 
-.item{
-  float:left;
-  width: 125px;
-  padding: 0px;
-  margin-left: 5px;
+		p {
+			font-size: 15px;
+			margin-bottom: 7px;
+			font-weight: 500;
+			text-align: center;
+		}
+	}
 }

@@ -37,8 +37,7 @@ export class HomePage {
   	.then(file_uri => this.cameraSuccess(file_uri), err => console.log(err));
   }
 
-  private cameraSuccess (file_uri) {
-    console.log(file_uri)
+  private cameraSuccess (file_uri) {    
   	let image = new Image();
 		image.onload = ()=>{
 			this._filterService.setImage(image);
