@@ -1,0 +1,27 @@
+<!--
+  Generated template for the SharePagePage page.
+
+  See http://ionicframework.com/docs/v2/components/#navigation for more info on
+  Ionic pages and navigation.
+-->
+<ion-header>
+
+  <ion-navbar>
+    <ion-title>SharePage</ion-title>
+  </ion-navbar>
+
+</ion-header>
+
+
+<ion-content>
+
+	<ion-card>
+		<ion-textarea placeholder="Write a caption..." clearInput></ion-textarea>
+	</ion-card>
+	<ion-list>
+		<ion-item *ngFor="let option of options" on-tap="shareImage(option.label)">
+			<ion-icon name="{{option.icon}}"></ion-icon>
+			{{option.label}}
+		</ion-item>
+	</ion-list>
+</ion-content>

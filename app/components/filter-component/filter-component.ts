@@ -16,11 +16,6 @@ export class FilterComponent {
 	
 	@Input () filterName: string;
 
-	private imageData: ImageData;
-	private image: any;
-	private canvas: any;
-	private ctx: CanvasRenderingContext2D;	
-
   constructor(private _filterService: FilterService) {};
 
 	ngOnInit(){

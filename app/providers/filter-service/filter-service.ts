@@ -91,24 +91,10 @@ export class FilterService {
     return imageData;    
   }
 
-  public selectFilter(filterName: string) {
-     this.originalCtx.putImageData(this.filteredData[filterName], 0, 0);
-  }
-
-  public setImage(image) {
-    this.image = image;    
-  }
-
-  public getImage() {
-    return this.image;
-
-  }
-
   public setOriginalCanvas(canvas: any) {
     this.originalCanvas = canvas;
     this.originalCtx = this.originalCanvas.getContext("2d");     
-    this.copyCanvas(canvas);
-    // this.generateFilters();
+    this.copyCanvas(canvas);    
   }
 
   private copyCanvas(canvas: any) {
@@ -122,16 +108,29 @@ export class FilterService {
                            0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
-  private generateFilters () {
-    for (let filterName of this.filterNames) {    
-      let imageDataCopy = this.ctxCopy.getImageData(0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);      
-      let filteredData = this.applyFilter(filterName, imageDataCopy);      
-      this.filteredData[filterName] = filteredData;
-    }
+  // private generateFilters () {
+  //   for (let filterName of this.filterNames) {    
+  //     let imageDataCopy = this.ctxCopy.getImageData(0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);      
+  //     let filteredData = this.applyFilter(filterName, imageDataCopy);      
+  //     this.filteredData[filterName] = filteredData;
+  //   }
+  // }
+
+  // public getFilteredImageData (filterName: string) {
+  //   return this.filteredData[filterName];
+  // }
+
+  public getOriginalCanvas () {
+    return this.originalCanvas;
   }
 
-  public getFilteredImageData (filterName: string) {
-    return this.filteredData[filterName];
+  public setImage(image) {
+    this.image = image;    
+  }
+
+  public getImage() {
+    return this.image;
+
   }
 
   public getFilterNames () {

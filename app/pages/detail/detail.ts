@@ -1,8 +1,9 @@
 import { Component, ViewChild, ElementRef } from '@angular/core';
 import { NavController, ViewController } from 'ionic-angular';
-import {FilterService} from '../../providers/filter-service/filter-service';
-import {FilterComponent} from '../../components/filter-component/filter-component';
-import {File} from 'ionic-native';
+import { FilterService } from '../../providers/filter-service/filter-service';
+import { FilterComponent } from '../../components/filter-component/filter-component';
+import { SharePage } from '../../pages/share/share';
+
 /*
   Generated class for the DetailedViewPage page.
 
@@ -10,10 +11,10 @@ import {File} from 'ionic-native';
   Ionic pages and navigation.
 */
 @Component({
-  templateUrl: 'build/pages/detailed-view/detailed-view.html',
+  templateUrl: 'build/pages/detail/detail.html',
   directives: [FilterComponent]
 })
-export class DetailedViewPage {
+export class DetailPage {
 
 	@ViewChild("photo") photo: ElementRef;
 	canvas: HTMLCanvasElement;
@@ -30,16 +31,19 @@ export class DetailedViewPage {
 	}
 
   private drawImage () {
-  	this.image = this._filterService.getImage();      
+  	let ctx;          
     let canvas = this.photo.nativeElement;
     
     canvas.width = canvas.height = window.innerWidth;
-    // canvas.height = (canvas.width / this.image.width) * this.image.height; //match canvas aspect ratio to original image
-    
-    let ctx = canvas.getContext("2d");	
-  	this._filterService.setOriginalCanvas(canvas);	
+    ctx = canvas.getContext("2d");	
+
+    this._filterService.setOriginalCanvas(canvas);	
     this._filterService.drawImage(ctx);
     
   }	
+
+  private navToSharePage() {
+    this._nav.push(SharePage);
+  }
 
 }

@@ -5,7 +5,7 @@ import {HomePage} from './pages/home/home';
 import {FilterService} from './providers/filter-service/filter-service';
 
 @Component({
-  template: '<ion-nav [root]="rootPage"></ion-nav>'
+  template: '<ion-nav swipeBackEnabled="false" [root]="rootPage"></ion-nav>'
 })
 export class MyApp {
   rootPage: any = HomePage;
@@ -18,4 +18,4 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [FilterService], { backButtonIcon: false, swipeBackEnabled:false });
+ionicBootstrap(MyApp, [FilterService], { });
