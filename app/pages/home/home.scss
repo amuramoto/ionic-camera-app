@@ -20,6 +20,26 @@ ion-icon[name=images] {
 	padding: 15px;	
 }
 
+ion-loading {
+	ion-backdrop {
+		opacity: 0.5;
+	}
+
+	.loading-wrapper {
+		background: none;
+	}
+
+	.loading-spinner {
+		.spinner-ios line {
+			stroke: #FFFFFF;
+		}
+
+		ion-spinner {
+			width: 35px;
+			height: 35px;
+		}
+	}
+}
 p {
 	color: color($colors, ionic, contrast);
 	font-size: 20px;

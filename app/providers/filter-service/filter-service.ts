@@ -143,5 +143,9 @@ export class FilterService {
     this.originalCtx.putImageData(filteredData, 0, 0);
   }
 
+  public getCanvasAsImage () {
+    return this.originalCanvas.toDataURL();
+  }
+
 }
 

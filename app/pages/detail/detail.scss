@@ -11,6 +11,18 @@ ion-navbar {
 ion-scroll {
   white-space: nowrap;
   height: 180px;
+
+  ::-webkit-scrollbar {
+		display: none;
+	}
+}
+
+.canvas-container {
+	margin: 0 auto;
+
+	canvas {
+		border-bottom: #CCCCCC 1px solid;		
+	}
 }
 
 filter {
@@ -24,11 +36,7 @@ filter {
 		text-align: center;
 	}
 
-	.canvas-container {
-		margin: 0 auto;
-
-		canvas {
-			border-bottom: #CCCCCC 1px solid;		
-		}
-	}
+	canvas {
+		border: #CCCCCC 1px solid;		
+	}	
 }

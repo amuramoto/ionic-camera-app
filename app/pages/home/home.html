@@ -1,7 +1,7 @@
 <ion-header>
   <ion-navbar ionic>
     <ion-title>
-      Ionic Camera
+      Ionigram
     </ion-title>
   </ion-navbar>
 </ion-header>
@@ -9,11 +9,11 @@
 <ion-content>
   <div class="center-vertical">
     <div text-center>    
-      <ion-icon name="camera" on-tap="takePicture()"></ion-icon>
+      <ion-icon name="camera" on-tap="getPicture('camera')"></ion-icon>
       <p>Take a Photo</p>
     </div>
     <div text-center>    
-      <ion-icon name="images" on-tap="showGallery()"></ion-icon>
+      <ion-icon name="images" on-tap="getPicture('gallery')"></ion-icon>
       <p>Choose a Photo</p>
     </div>
   </div>  

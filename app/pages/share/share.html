@@ -16,7 +16,7 @@
 <ion-content>
 
 	<ion-card>
-		<ion-textarea placeholder="Write a caption..." clearInput></ion-textarea>
+		<ion-textarea (ngModel)="message" placeholder="Write a caption..." clearInput></ion-textarea>
 	</ion-card>
 	<ion-list>
 		<ion-item *ngFor="let option of options" on-tap="shareImage(option.label)">
