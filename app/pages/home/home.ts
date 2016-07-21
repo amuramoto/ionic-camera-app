@@ -1,8 +1,9 @@
-import {Component, ElementRef, ViewChild} from '@angular/core';
-import {NavController, Platform, Loading} from 'ionic-angular';
+import {Component} from '@angular/core';
+import {NavController, Loading} from 'ionic-angular';
 import {DetailPage} from '../detail/detail'
-import {Camera} from 'ionic-native';
+import {Camera, CameraPreview} from 'ionic-native';
 import {FilterService} from '../../providers/filter-service/filter-service';
+import {CameraPage} from '../camera/camera';
 
 @Component({
   templateUrl: 'build/pages/home/home.html'
@@ -12,7 +13,7 @@ export class HomePage {
   private options: any;
   private loading: Loading;
 
-  constructor(private _nav: NavController, private _filterService: FilterService, private _platform: Platform) {
+  constructor(private _nav: NavController, private _filterService: FilterService) {
 
     this.options = {
       camera: {
@@ -35,9 +36,22 @@ export class HomePage {
 
   }
 
-  private getPicture (source: string) {
 
-    this.loading = Loading.create({spinner: 'bubbles'});
+
+
+
+private startCamera () {
+  this._nav.push(CameraPage); 
+}
+
+
+
+
+
+
+  private getPicture (source: string): void {
+
+    this.loading = Loading.create({cssClass: 'cameraLoading'});
 
     Camera.getPicture(this.options[source])
       .then(file_uri => this.cameraSuccess(file_uri), err => console.log(err));   
@@ -46,7 +60,7 @@ export class HomePage {
     setTimeout(() => {this._nav.present(this.loading)}, 500); 
   }
 
-  private cameraSuccess (file_uri) {        
+  private cameraSuccess (file_uri: string): void {        
    
     let image = new Image();
 		image.onload = ()=>{

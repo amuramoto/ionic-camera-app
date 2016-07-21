@@ -11,15 +11,11 @@ import 'rxjs/add/operator/map';
 @Injectable()
 export class FilterService {
   
-  private originalCanvas: any;
-  private originalCtx: CanvasRenderingContext2D;
-  private canvasCopy: any;
+  private originalCanvas: HTMLCanvasElement;
+  private originalCtx: CanvasRenderingContext2D;  
   private ctxCopy: CanvasRenderingContext2D;
-  private originalImageData: ImageData;
-  private image;
+  private image: HTMLImageElement;
   private filterNames: Array<string>;
-  public  selectedFilter: Uint8ClampedArray;
-  private filteredData = {};
   private filterMatrices: Object = {
        Hayward: [0.393, 0.769,  0.189, 0,
                  0.349, 0.686,  0.168, 0,
@@ -91,60 +87,44 @@ export class FilterService {
     return imageData;    
   }
 
-  public setOriginalCanvas(canvas: any) {
+  public setOriginalCanvas(canvas: HTMLCanvasElement): void {
     this.originalCanvas = canvas;
     this.originalCtx = this.originalCanvas.getContext("2d");     
     this.copyCanvas(canvas);    
   }
 
-  private copyCanvas(canvas: any) {
-    this.canvasCopy = canvas.cloneNode();
-    this.ctxCopy = this.canvasCopy.getContext("2d");
+  private copyCanvas(canvas: HTMLCanvasElement): void {
+    let canvasCopy: any = canvas.cloneNode();
+    this.ctxCopy = canvasCopy.getContext("2d");
     this.drawImage(this.ctxCopy);
   }
 
-  public drawImage (ctx) {
+  public drawImage (ctx: CanvasRenderingContext2D): void {
     ctx.drawImage(this.image, 0, 0, this.image.width, this.image.width,
                            0, 0, ctx.canvas.width, ctx.canvas.height);
   }
 
-  // private generateFilters () {
-  //   for (let filterName of this.filterNames) {    
-  //     let imageDataCopy = this.ctxCopy.getImageData(0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);      
-  //     let filteredData = this.applyFilter(filterName, imageDataCopy);      
-  //     this.filteredData[filterName] = filteredData;
-  //   }
-  // }
-
-  // public getFilteredImageData (filterName: string) {
-  //   return this.filteredData[filterName];
-  // }
-
-  public getOriginalCanvas () {
+  public getOriginalCanvas (): HTMLCanvasElement {
     return this.originalCanvas;
   }
 
-  public setImage(image) {
+  public setImage(image: HTMLImageElement): void {
     this.image = image;    
   }
 
-  public getImage() {
+  public getImage(): HTMLImageElement {
     return this.image;
 
   }
 
-  public getFilterNames () {
+  public getFilterNames (): any {
     return this.filterNames;
   }
 
-  public displayFilteredImage (filterName: string) {
+  public displayFilteredImage (filterName: string): void {
     let imageData = this.ctxCopy.getImageData(0, 0, this.ctxCopy.canvas.width, this.ctxCopy.canvas.height);
     let filteredData = this.applyFilter(filterName, imageData)
     this.originalCtx.putImageData(filteredData, 0, 0);
-  }
-
-  public getCanvasAsImage () {
-    return this.originalCanvas.toDataURL();
   }
 
 }

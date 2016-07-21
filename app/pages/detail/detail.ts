@@ -25,12 +25,12 @@ export class DetailPage {
   	this.filterNames = this._filterService.getFilterNames();
   }
 
-  ionViewLoaded () {	
+  ionViewLoaded (): void {	
     this._viewCtrl.setBackButtonText('Cancel');
     this.drawImage();    
 	}
 
-  private drawImage () {
+  private drawImage (): void {
   	let ctx;          
     let canvas = this.photo.nativeElement;
     
@@ -42,7 +42,7 @@ export class DetailPage {
     
   }	
 
-  private navToSharePage() {
+  private navToSharePage(): void {
     this._nav.push(SharePage);
   }
 

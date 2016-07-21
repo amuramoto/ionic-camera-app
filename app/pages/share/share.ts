@@ -1,5 +1,5 @@
 import { Component, ViewChild } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, Loading } from 'ionic-angular';
 import { FilterService } from '../../providers/filter-service/filter-service';
 import { Base64ToGallery, SocialSharing } from 'ionic-native';
 
@@ -20,34 +20,35 @@ export class SharePage {
       { label: 'Twitter', icon: 'logo-twitter' },
       { label: 'WhatsApp', icon: 'logo-whatsapp' }
     ];
-  private message: string;
-  private image: any;
+  private imageData: string;
+  private loading: Loading;
 
-  constructor(private nav: NavController, private _filterService: FilterService) {
-  	let canvas = this._filterService.getOriginalCanvas();
-    this.image = canvas.toDataURL();
+  constructor(private _nav: NavController, private _filterService: FilterService) {
+  	let canvas: HTMLCanvasElement = this._filterService.getOriginalCanvas();
+    this.imageData = canvas.toDataURL();
 
   }
 
-  private shareImage (option) {
+  private shareImage (option: string) {
   	switch (option) {
       case 'Save Image':
+        this.loading = Loading.create({content: 'Saving...'});
+        this._nav.present(this.loading)
         this.saveImage();
         break;
       case 'Twitter':
-      console.log(this.message)
-        SocialSharing.shareViaTwitter(this.message, this.image);
+        SocialSharing.shareViaTwitter('', this.imageData);
         break;
       case 'Facebook':
-        SocialSharing.shareViaFacebook(this.message, this.image);
+        SocialSharing.shareViaFacebook('', this.imageData);
         break;
     }    
   }
 
   private saveImage() {    
-    Base64ToGallery.base64ToGallery(this.image, 'ionigram_').then(
-      res => console.log("Saved image to gallery ", res),
-      err => console.log("Error saving image to gallery ", err))
+    Base64ToGallery.base64ToGallery(this.imageData, {prefix: 'ionigram_'}).then(
+      res => setTimeout(() => this.loading.dismiss(), 1000),      
+      err => setTimeout(() => this.loading.dismiss(), 1000))
   }
 
 }

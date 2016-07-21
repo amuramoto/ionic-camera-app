@@ -1,26 +1,35 @@
-ion-icon[name=camera], ion-icon[name=images] {	
-    border: color($colors, ionic, contrast) 2px solid;    
-    border-radius: 50%;
-    background-color: #2155AA;
-    color: color($colors, ionic, contrast);
-}
- 
-ion-icon[name=camera] {
-	font-size: 45px;
-	width: 65px;
-	padding: 10px;
-	
-	& + p {
-		margin-bottom: 40px
+.home-page {
+	ion-icon[name=camera], ion-icon[name=images] {	
+	    border: color($colors, ionic, contrast) 2px solid;    
+	    border-radius: 50%;
+	    background-color: #2155AA;
+	    color: color($colors, ionic, contrast);
+	}
+	 
+	ion-icon[name=camera] {
+		font-size: 45px;
+		width: 65px;
+		padding: 10px;
+		
+		& + p {
+			margin-bottom: 40px
+		}
+	}
+
+	ion-icon[name=images] {
+		font-size: 35px;
+		padding: 15px;	
+	}
+
+	p {
+		color: color($colors, ionic, contrast);
+		font-size: 20px;
+		font-weight: 500;
 	}
 }
 
-ion-icon[name=images] {
-	font-size: 35px;
-	padding: 15px;	
-}
-
-ion-loading {
+ion-loading.cameraLoading {
+	
 	ion-backdrop {
 		opacity: 0.5;
 	}
@@ -40,9 +49,3 @@ ion-loading {
 		}
 	}
 }
-p {
-	color: color($colors, ionic, contrast);
-	font-size: 20px;
-	font-weight: 500;
-}
-

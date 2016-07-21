@@ -1,0 +1,35 @@
+.camera {
+
+}
+
+.camera-controls {
+	position: absolute;
+	bottom: 15px;
+	width: 100%;
+}
+
+.reverseBtn-container {
+	
+	margin-left: 25px;
+	margin-top: 30px;
+		
+	ion-icon[name=reverse-camera] {
+		color: #EEEEEE;
+		font-size: 40px;
+	}
+}
+
+.cameraBtn-container {
+
+	width: 75px;
+	margin: 0 auto;
+
+	ion-icon[name=disc] {
+		color: #FFFFFF;
+		font-size: 90px;
+	}
+}
+
+.cameraBtn {		
+	font-size: 50px;
+}
