@@ -39,10 +39,12 @@ export class CameraPage {
 		CameraPreview.startCamera(options);
 
 		CameraPreview.setOnPictureTakenHandler().subscribe(result => {
+
 			let image = new Image();		
 			let file_uri = result[0];
-			File.readAsDataURL(file_uri).then(dataURL => {
-				image.onload = () => {
+			File.readAsDataURL(file_uri).then(dataURL => {				
+				image.onload = () => {					
+					image.width = image.height = window.innerWidth;
 					this._filterService.setImage(image);      
 		      this._nav.push(DetailPage);
 		      this.loading.dismiss();

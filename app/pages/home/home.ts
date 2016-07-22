@@ -4,7 +4,6 @@ import {DetailPage} from '../detail/detail'
 import {Camera, CameraPreview} from 'ionic-native';
 import {FilterService} from '../../providers/filter-service/filter-service';
 import {CameraPage} from '../camera/camera';
-
 @Component({
   templateUrl: 'build/pages/home/home.html'
 })

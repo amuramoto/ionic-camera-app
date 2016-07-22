@@ -15,7 +15,6 @@ import { SharePage } from '../../pages/share/share';
   directives: [FilterComponent]
 })
 export class DetailPage {
-
 	@ViewChild("photo") photo: ElementRef;
 	canvas: HTMLCanvasElement;
 	ctx: CanvasRenderingContext2D;	

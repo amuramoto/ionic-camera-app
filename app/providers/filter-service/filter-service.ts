@@ -100,6 +100,7 @@ export class FilterService {
   }
 
   public drawImage (ctx: CanvasRenderingContext2D): void {
+console.log(this.image);    
     ctx.drawImage(this.image, 0, 0, this.image.width, this.image.width,
                            0, 0, ctx.canvas.width, ctx.canvas.height);
   }
@@ -109,6 +110,7 @@ export class FilterService {
   }
 
   public setImage(image: HTMLImageElement): void {
+    console.log(image);
     this.image = image;    
   }
 
