@@ -18,4 +18,4 @@ export class MyApp {
   }
 }
 
-ionicBootstrap(MyApp, [FilterService], { });
+ionicBootstrap(MyApp, [FilterService], {statusbarPadding: false});

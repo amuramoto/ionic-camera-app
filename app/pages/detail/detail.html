@@ -23,6 +23,6 @@
 
 <ion-footer>
 	<ion-scroll scrollX="true">	
-		<filter *ngFor="let filterName of filterNames" filterName="{{filterName}}"></filter>				
+		<filter *ngFor="let filterName of filterNames" [filterName]="filterName"></filter>				
 	</ion-scroll>
 </ion-footer>

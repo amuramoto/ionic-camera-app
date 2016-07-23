@@ -35,19 +35,6 @@ export class HomePage {
 
   }
 
-
-
-
-
-private startCamera () {
-  this._nav.push(CameraPage); 
-}
-
-
-
-
-
-
   private getPicture (source: string): void {
 
     this.loading = Loading.create({cssClass: 'cameraLoading'});
